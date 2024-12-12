@@ -31,12 +31,11 @@ const DATA = [
 
 
 function App() {
-
   return (
     <>
       <main>
         <h1> The Cat Corral </h1>
-        <CatList catData={DATA}/>
+        <CatList catData={DATA} />
       </main>
     </>
 
