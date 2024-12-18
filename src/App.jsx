@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import CatList from './components/CatList';
+import NewCatForm from './components/NewCatForm';
 import axios from 'axios';
 
 const kbaseURL = 'http://localhost:5000';
@@ -115,11 +116,20 @@ function App() {
 
   const totalPets = calculateTotalPetCount(catData);
 
+  const handleSubmit = (data) => {
+    axios.post(`${kbaseURL}/cats`, data)
+      .then((result) => {
+        setCatData((prevCats) => [convertFromApi(result.data), ...prevCats]);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <>
       <main>
         <h1> The Cat Corral </h1>
         <h2>Total Number of Pets Across All Cats: {totalPets}</h2>
+        <NewCatForm handleSubmit={handleSubmit}/>
         <CatList
           catData={catData}
           onPetCat={handlePetCat}
